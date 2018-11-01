@@ -1,0 +1,15 @@
+{
+  "hosting": {
+    "public": "dist",
+    "rewrites": [
+      {
+        "source": "/assets/**/**",
+        "function": "{GCP-PROJECT-NAME}.firebaseapp.com"
+      }
+    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+  },
+  "functions": {
+    "source": "server"
+  }
+}
