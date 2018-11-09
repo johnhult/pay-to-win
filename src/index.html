@@ -7,7 +7,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta http-equiv="Content-Security-Policy" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>Humblebee Boilerplate Site</title>
+	<title>Pay to Win!</title>
 
 	<!-- Manifest data -->
 	<link rel="manifest" href="/manifest.webmanifest" type="application/manifest+json">
@@ -15,7 +15,7 @@
 	<meta name="application-name" content="App">
 	<meta name="theme-color" content="#ffffff">
 	<meta name="description" content="Humblebee Boilerplate Site">
-	<meta name="keywords" content="Humblebee Boilerplate, Humblebee, Boilerplate" />
+	<meta name="keywords" content="Pay to win, pay, win, gameification, money, payment, payments" />
 
 	<!-- OpenGraph/Facebook metadata -->
 	<meta property="og:url" content="" />
@@ -64,7 +64,7 @@
 		::after,
 		::before {
 			background-repeat: no-repeat;
-			box-sizing: inherit
+			box-sizing: border-box;
 		}
 
 		::after,
@@ -77,7 +77,8 @@
 			box-sizing: border-box;
 			cursor: default;
 			-ms-text-size-adjust: 100%;
-			-webkit-text-size-adjust: 100%
+			-webkit-text-size-adjust: 100%;
+			height: 100%;
 		}
 
 		article,
@@ -92,6 +93,11 @@
 		body {
 			margin: 0;
 			overflow-x: hidden;
+			height: 100%;
+		}
+
+		#root {
+			height: 100%;
 		}
 
 		h1 {
@@ -423,7 +429,7 @@
 		article,
 		section {
 			font-size: 16px;
-			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+			font-family: "Basis Grotesque Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 		}
 
 		img {
@@ -438,10 +444,37 @@
 			font-display: swap;
 		}
 		*/
+		@font-face {
+			font-family: 'Basis Grotesque Pro';
+			src: url('assets/fonts/BasisGrotesquePro-Regular.woff2') format('woff2'),
+				url('assets/fonts/BasisGrotesquePro-Regular.woff') format('woff');
+			font-weight: normal;
+			font-style: normal;
+			font-display: swap;
+		}
+
+		@font-face {
+			font-family: 'Basis Grotesque Pro';
+			src: url('assets/fonts/BasisGrotesquePro-Light.woff2') format('woff2'),
+				url('assets/fonts/BasisGrotesquePro-Light.woff') format('woff');
+			font-weight: 300;
+			font-style: normal;
+			font-display: swap;
+		}
+
+		@font-face {
+			font-family: 'Basis Grotesque Pro';
+			src: url('assets/fonts/BasisGrotesquePro-Bold.woff2') format('woff2'),
+				url('assets/fonts/BasisGrotesquePro-Bold.woff') format('woff');
+			font-weight: bold;
+			font-style: normal;
+			font-display: swap;
+		}
 	</style>
 
 	<!-- Preload smart, dynamic polyfill -->
 	<link rel="preload" as="script" href="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6">
+	<link rel="preload" as="script" href="https://js.stripe.com/v3/">
 
 	<!--
 		Font preloading
@@ -463,6 +496,7 @@
 
 	<!-- Load smart, dynamic polyfill -->
 	<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6"></script>
+	<script src="https://js.stripe.com/v3/"></script>
 
 	<!-- Inline any scripts that make sense to include as part of the HTML payload (saving a request) or that need to happen instantly -->
 	<script>

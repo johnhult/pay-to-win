@@ -1,9 +1,9 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import fontSizes from 'tokens/fontSizes.mjs';
-import fontFamilies from 'tokens/fontFamilies.mjs';
-import spacing from 'tokens/spacing.mjs';
-import colors from 'tokens/colors.mjs';
+import fontSizes from "tokens/fontSizes.mjs";
+import fontFamilies from "tokens/fontFamilies.mjs";
+import spacing from "tokens/spacing.mjs";
+import colors from "tokens/colors.mjs";
 
 const ButtonStyled = styled.button`
 	appearance: none;
@@ -14,27 +14,26 @@ const ButtonStyled = styled.button`
 	display: block;
 	height: 3rem;
 	border: 0;
-	border-radius: 0.5rem;
+	font-weight: 600;
 
-	font-size: ${fontSizes.m};
-	font-family: ${fontFamilies.fontSemibold};
+	font-size: 16px;
+	font-family: monospace;
 	color: ${colors.white};
-	background-color: ${colors.blue};
-	padding: ${spacing.tiny} ${spacing.small};
-	margin: 0 0 ${spacing.small} 0;
+	background-color: black;
+	padding: 0 40px;
 	cursor: pointer;
-	transition: 0.1s;
+	transition: 0.2s;
 
-	&:hover {
-		box-shadow: 0 0.5rem 1rem -0.5rem ${colors.gray3};
-		transition: 0.2s;
+	&:hover,
+	&:focus {
+		background-color: #404040;
 	}
 
 	&:disabled {
 		cursor: not-allowed;
 		border: 0;
 		color: ${colors.gray1};
-		background-color: ${colors.red};
+		background-color: black;
 		transition: 0.2s;
 	}
 `;

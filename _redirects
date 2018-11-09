@@ -1,0 +1,2 @@
+# Redirect default Netlify subdomain to primary domain
+http://pay-to-win.netlify.com/* http://paytow.in/:splat 301!

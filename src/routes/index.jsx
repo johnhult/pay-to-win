@@ -1,17 +1,17 @@
-import React from 'react';
-import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
-import Loadable from 'react-loadable';
+import React from "react";
+import { Route, Redirect, Switch, withRouter } from "react-router-dom";
+import Loadable from "react-loadable";
 
 //import { getAuthUser } from 'helpers/user.mjs';
 
 /* Note: Loadable may not work correctly in SSR */
 const SomeView = Loadable({
-	loader: () => import('containers/SomeView'),
-	loading: 'Loading'
+	loader: () => import("containers/SomeView"),
+	loading: "Loading"
 });
 const ExamplesView = Loadable({
-	loader: () => import('containers/ExamplesView'),
-	loading: 'Loading'
+	loader: () => import("containers/ExamplesView"),
+	loading: "Loading"
 });
 
 class Routes extends React.Component {
@@ -37,7 +37,7 @@ class Routes extends React.Component {
 		return (
 			<Switch>
 				<Route exact path="/" render={() => <SomeView />} />
-				<Route exact path="/examples" render={() => <ExamplesView />} />
+				{/* <Route exact path="/examples" render={() => <ExamplesView />} /> */}
 				<Route render={() => <Redirect to="/" />} />
 			</Switch>
 		);
