@@ -3,7 +3,7 @@
 	"main": "index.jsx",
 	"license": "MIT",
 	"author": "",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"config": {
 		"figmagicPath": "node_modules/figmagic",
 		"siteUrl": "https://project.netlify.com"
