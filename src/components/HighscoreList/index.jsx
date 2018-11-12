@@ -3,9 +3,15 @@ import PropTypes from "prop-types";
 
 import HighscoreListStyled from "./HighscoreListStyled";
 
-const HighscoreList = props => (
-	<HighscoreListStyled {...props}>{props.children}</HighscoreListStyled>
-);
+class HighscoreList extends React.Component {
+	constructor(props) {
+		super(props);
+	}
+
+	render() {
+		return <HighscoreListStyled>{this.props.children}</HighscoreListStyled>;
+	}
+}
 
 HighscoreList.propTypes = {
 	/*

@@ -62,7 +62,7 @@ class SomeView extends React.Component {
 			isLoading: true,
 
 			showModal: {
-				done: true,
+				done: false,
 				failed: false
 			},
 			explosion: {
@@ -186,7 +186,7 @@ class SomeView extends React.Component {
 							<H3>
 								No bullshit. What you pay is your score. Gameplay not included.
 							</H3>
-							<HighscoreList />
+							<HighscoreList list={this.state.data} />
 						</section>
 						<section className="Pay">
 							<StripeProvider apiKey="null">
@@ -199,7 +199,7 @@ class SomeView extends React.Component {
 							<Dialog
 								toggleDialog={this.closeModal}
 								confetti={this.state.explosion}
-								buttonText="New game"
+								buttonText="New Game"
 							>
 								<H3 style={"margin: 0 0 10px 0;"}>GG WP!</H3>
 								<p>
@@ -210,8 +210,9 @@ class SomeView extends React.Component {
 							</Dialog>
 						)}
 						{this.state.showModal.failed && (
-							<Dialog toggleDialog={this.closeModal} buttonText="Retry">
-								<p>You didn't do it!</p>
+							<Dialog toggleDialog={this.closeModal} buttonText="Main Menu">
+								<H3 style={"margin: 0 0 10px 0;"}>Game Over</H3>
+								<p>Something went wrong. Your card was not charged.</p>
 							</Dialog>
 						)}
 					</WrapperStyled>

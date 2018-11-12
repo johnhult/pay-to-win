@@ -27,10 +27,11 @@ const DialogStyled = styled(Box)`
 		margin: 0 auto;
 	}
 
-	.CloseIcon {
-		position: absolute;
-		right: 10px;
-		top: 10px;
+	.DialogButton {
+		background-color: darkturquoise;
+		width: 100%;
+		height: 40px;
+		padding: 5px;
 	}
 `;
 

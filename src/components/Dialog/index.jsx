@@ -25,34 +25,33 @@ const Dialog = props => (
 	>
 		<DialogStyled>
 			<div className="Dialog-Inside">
-				<Confetti
-					className="Confetti"
-					active={props.confetti.w}
-					config={config}
-				/>
-				<Confetti
-					className="Confetti"
-					active={props.confetti.a}
-					config={{ ...config, angle: 180 }}
-				/>
-				<Confetti
-					className="Confetti"
-					active={props.confetti.s}
-					config={{ ...config, angle: 270 }}
-				/>
-				<Confetti
-					className="Confetti"
-					active={props.confetti.d}
-					config={{ ...config, angle: 0 }}
-				/>
+				{props.confetti && (
+					<div>
+						<Confetti
+							className="Confetti"
+							active={props.confetti.w}
+							config={config}
+						/>
+						<Confetti
+							className="Confetti"
+							active={props.confetti.a}
+							config={{ ...config, angle: 180 }}
+						/>
+						<Confetti
+							className="Confetti"
+							active={props.confetti.s}
+							config={{ ...config, angle: 270 }}
+						/>
+						<Confetti
+							className="Confetti"
+							active={props.confetti.d}
+							config={{ ...config, angle: 0 }}
+						/>
+					</div>
+				)}
 				{props.children}
 				<Button
-					style={{
-						backgroundColor: "darkturquoise",
-						width: "100%",
-						height: "40px",
-						padding: "5px"
-					}}
+					className="DialogButton"
 					onClick={e => props.toggleDialog(e, true)}
 				>
 					{props.buttonText}
