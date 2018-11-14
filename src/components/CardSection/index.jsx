@@ -32,15 +32,24 @@ class CardSection extends React.Component {
 					<CardNumberElement
 						{...this.props.stripeStyle}
 						placeholder="Card Number"
+						onReady={ref => this.props.setStripeElement(ref, "number")}
 						required
 					/>
 				</label>
 				<div className="StripeInRow">
 					<label>
-						<CardExpiryElement {...this.props.stripeStyle} required />
+						<CardExpiryElement
+							{...this.props.stripeStyle}
+							onReady={ref => this.props.setStripeElement(ref, "expiration")}
+							required
+						/>
 					</label>
 					<label>
-						<CardCVCElement {...this.props.stripeStyle} required />
+						<CardCVCElement
+							{...this.props.stripeStyle}
+							onReady={ref => this.props.setStripeElement(ref, "cvc")}
+							required
+						/>
 					</label>
 				</div>
 			</CardSectionStyled>

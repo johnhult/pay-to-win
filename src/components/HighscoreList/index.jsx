@@ -9,7 +9,39 @@ class HighscoreList extends React.Component {
 	}
 
 	render() {
-		return <HighscoreListStyled>{this.props.children}</HighscoreListStyled>;
+		const list = this.props.list.map((e, i) => {
+			let playerPos = i + 1;
+			let formattedScore;
+			playerPos = playerPos.toString();
+			playerPos = playerPos.replace(/(?!^)(?=(?:\d{3})+(?:\.|$))/gm, " ");
+			if (e.score) {
+				formattedScore = e.score
+					.toString()
+					.replace(/(?!^)(?=(?:\d{3})+(?:\.|$))/gm, " ");
+			}
+			return (
+				<li key={i}>
+					<span className="PlayerPosition">Rank {playerPos}</span>
+					<div className="HighscoreListItem">
+						{e.nickname && <span className="PlayerNickname">{e.nickname}</span>}
+						{formattedScore && (
+							<span className="PlayerScore">{formattedScore}</span>
+						)}
+					</div>
+				</li>
+			);
+		});
+		return (
+			<HighscoreListStyled>
+				<div className="ListHeaders">
+					<h3>Nickname</h3>
+					<h3>Score</h3>
+				</div>
+				<div className="ScrollWrapper">
+					<ul>{list}</ul>
+				</div>
+			</HighscoreListStyled>
+		);
 	}
 }
 
@@ -20,8 +52,8 @@ HighscoreList.propTypes = {
 		PropTypes.number,
 		PropTypes.element
 	]).isRequired,
-	to: PropTypes.string.isRequired
 	*/
+	list: PropTypes.array
 };
 
 HighscoreList.defaultProps = {

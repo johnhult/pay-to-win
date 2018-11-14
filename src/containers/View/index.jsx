@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Helmet } from 'react-helmet';
+import React from "react";
+import PropTypes from "prop-types";
+import { Helmet } from "react-helmet";
 
-import ViewStyled from './ViewStyled';
+import ViewStyled from "./ViewStyled";
 
 const View = props => (
 	<ViewStyled>
@@ -15,7 +15,7 @@ const View = props => (
 );
 
 View.propTypes = {
-	children: PropTypes.element.isRequired,
+	children: PropTypes.node.isRequired,
 	title: PropTypes.string.isRequired
 };
 

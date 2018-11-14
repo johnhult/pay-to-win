@@ -1,7 +1,7 @@
 // CheckoutForm.js
 import React from "react";
 import { injectStripe } from "react-stripe-elements";
-import PropTypes from "prop-types";
+import PropTypes, { number } from "prop-types";
 
 import { postOptions, stripePayment } from "helpers/api.mjs";
 import getData from "helpers/getData.mjs";
@@ -75,7 +75,7 @@ class CheckoutForm extends React.Component {
 				address_city: "",
 				address_state: "",
 				address_zip: "",
-				amount: "100"
+				amount: 100
 			},
 			invalid: {
 				nickname: true,
@@ -98,7 +98,11 @@ class CheckoutForm extends React.Component {
 			},
 			paymentLoading: false
 		};
-		this.postalCodeElement = null;
+		this.stripeElements = {
+			number: null,
+			expiration: null,
+			cvc: null
+		};
 	}
 
 	handleChange = ev => {
@@ -107,7 +111,7 @@ class CheckoutForm extends React.Component {
 				if (ev.data && ev.data.search(/\D/) >= 0) {
 					return null;
 				} else {
-					ev.target.value = ev.target.value.replace(/^0+/, "");
+					ev.target.value = ev.target.value.toString().replace(/^0+/, "");
 					let parsedAmount = parseInt(ev.target.value);
 					let tooLow = isNaN(parsedAmount) || parsedAmount < 100;
 					return {
@@ -182,6 +186,7 @@ class CheckoutForm extends React.Component {
 		this.setState({
 			touched: setTouched
 		});
+
 		Object.keys(this.state.tokenInfo).forEach(name => {
 			this.handleChange({
 				target: { name: name, value: this.state.tokenInfo[name] }
@@ -194,6 +199,13 @@ class CheckoutForm extends React.Component {
 
 		const amount = this.state.tokenInfo.amount;
 		const currency = this.state.currency;
+
+		const player = {
+			nickname: this.state.tokenInfo.nickname,
+			email: this.state.tokenInfo.email,
+			score: this.state.tokenInfo.amount
+		};
+
 		// Within the context of `Elements`, this call to createToken knows which Element to tokenize, since there's only one in this group.
 		let tokenResponse = await this.props.stripe.createToken(
 			this.state.tokenInfo
@@ -205,6 +217,9 @@ class CheckoutForm extends React.Component {
 				paymentLoading: false
 			});
 
+			console.log("No token", tokenResponse.error);
+			this.props.payment("failed", tokenResponse.error.message);
+
 			return;
 		}
 
@@ -215,9 +230,9 @@ class CheckoutForm extends React.Component {
 				charge: { amount, currency }
 			})
 		).catch(err => {
+			this.props.payment("failed");
 			this.setState({
-				paymentLoading: false,
-				paymentFailed: true
+				paymentLoading: false
 			});
 		});
 		if (!paymentDone) {
@@ -228,55 +243,38 @@ class CheckoutForm extends React.Component {
 			return;
 		} else {
 			if (paymentDone.status === 200) {
-				console.log("Res: ", paymentDone);
 				this.props.payment("done");
 				this.setState({
 					paymentLoading: false
 				});
+				this.resetForm();
+				this.props.savePlayer(player);
 			} else {
-				console.log("Error: ", paymentDone);
-				this.props.payment("failed");
+				this.props.payment("failed", "Something went wrong.");
 				this.setState({
 					paymentLoading: false
 				});
 			}
 		}
+	};
 
-		// let getDataProm = tokenProm
-		// 	.then(({ token }) => {
-		// 		console.log(token);
+	resetForm = () => {
+		Object.keys(this.stripeElements).forEach(name => {
+			this.stripeElements[name].clear();
+		});
+		this.setState(prevState => {
+			let resetValue = {};
+			Object.keys(prevState.tokenInfo).forEach(name => {
+				resetValue[name] = name === "amount" ? "100" : "";
+			});
+			return {
+				tokenInfo: resetValue
+			};
+		});
+	};
 
-		// 		if (token) {
-		// 			return
-		// 		}
-		// 	})
-		// .catch(err => {
-		// 	console.log(err);
-		// 	this.setState({
-		// 		paymentLoading: false
-		// 	});
-		// 	this.setState({ tokenError: "Token Error" });
-		// });
-
-		// getDataProm
-		// 	.then(res => {
-		// 		if (res.status === 200) {
-		// 			console.log("Res: ", res);
-		// 			this.setState({
-		// 				paymentLoading: false,
-		// 				paymentDone: true
-		// 			});
-		// 		} else {
-		// 			console.log("Error: ", res);
-		// 			this.setState({
-		// 				paymentLoading: false,
-		// 				paymentFailed: true
-		// 			});
-		// 		}
-		// 	})
-		// 	.catch(error => {
-		// 		console.log("got error");
-		// 	});
+	setStripeElement = (ref, refName) => {
+		this.stripeElements[refName] = ref;
 	};
 
 	isEmail = str => {
@@ -297,7 +295,6 @@ class CheckoutForm extends React.Component {
 	changeBy = (ev, incOrDec) => {
 		this.setState(prevState => {
 			if (this.state.tokenInfo.amount === "") {
-				console.log("object");
 				let conditionalValue = ev.shiftKey ? incOrDec * 10 : incOrDec;
 				conditionalValue = conditionalValue < 0 ? 0 : conditionalValue;
 				let conditionalLow = conditionalValue < 100;
@@ -307,6 +304,7 @@ class CheckoutForm extends React.Component {
 						amount: conditionalLow
 					},
 					tokenInfo: {
+						...prevState.tokenInfo,
 						amount: conditionalValue
 					}
 				};
@@ -320,6 +318,7 @@ class CheckoutForm extends React.Component {
 					amount: tooLow
 				},
 				tokenInfo: {
+					...prevState.tokenInfo,
 					amount: newValue < 0 ? pInt : newValue
 				}
 			};
@@ -364,6 +363,7 @@ class CheckoutForm extends React.Component {
 						}}
 						handleChange={this.handleChange}
 						handleBlur={this.handleBlur}
+						setStripeElement={this.setStripeElement}
 					/>
 					<span className="CheckoutSubheader">Address</span>
 					<AddressSection
@@ -446,31 +446,6 @@ class CheckoutForm extends React.Component {
 					</a>
 					. No sensitive data saved.
 				</span>
-
-				<div>
-					<p>Invalid</p>
-					<p>
-						{Object.keys(this.state.invalid).map(item => (
-							<ul key={item}>
-								<li>
-									{item}: {this.state.invalid[item].toString()}
-								</li>
-							</ul>
-						))}
-					</p>
-				</div>
-				<div>
-					<p>Touched</p>
-					<p>
-						{Object.keys(this.state.touched).map(item => (
-							<ul key={item}>
-								<li>
-									{item}: {this.state.touched[item].toString()}
-								</li>
-							</ul>
-						))}
-					</p>
-				</div>
 			</CheckoutFormStyled>
 		);
 	}
@@ -480,7 +455,8 @@ export default injectStripe(CheckoutForm);
 
 CheckoutForm.propTypes = {
 	stripe: PropTypes.object,
-	payment: PropTypes.func
+	payment: PropTypes.func,
+	savePlayer: PropTypes.func
 };
 
 CheckoutForm.defaultTypes = {};

@@ -18,22 +18,24 @@ const ClipTextStyled = styled.div`
 	span:first-child {
 		background: url("assets/img/mario.gif") no-repeat;
 		background-size: contain;
-		background-position: -20% 0%;
+		background-position: -100% 0%;
 		/* Color fallback */
 		color: black;
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
-		animation: itsame infinite 12s linear;
+		animation: itsame infinite 10s linear;
+		position: relative;
+		z-index: 1;
 
 		@keyframes itsame {
 			0‰ {
-				background-position: -20% 0%;
+				background-position: -100% 0%;
 			}
 			50% {
 				background-position: 120% 0%;
 			}
 			100% {
-				background-position: 120% 0%;
+				background-position: 200% 0%;
 			}
 		}
 	}
@@ -44,7 +46,7 @@ const ClipTextStyled = styled.div`
 		left: 0;
 		width: 100%;
 		height: 100%;
-		z-index: -1;
+		z-index: 0;
 		color: darkturquoise;
 	}
 `;

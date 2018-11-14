@@ -9,10 +9,6 @@ const SomeView = Loadable({
 	loader: () => import("containers/SomeView"),
 	loading: "Loading"
 });
-const ExamplesView = Loadable({
-	loader: () => import("containers/ExamplesView"),
-	loading: "Loading"
-});
 
 class Routes extends React.Component {
 	constructor(props) {
