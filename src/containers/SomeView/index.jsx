@@ -12,9 +12,10 @@ import getDataFirestore from "helpers/firestore/getDataFirestore.mjs";
 import writeDataFirestore from "helpers/firestore/writeDataFirestore.mjs";
 import CheckoutForm from "components/CheckoutForm";
 import HighscoreList from "components/HighscoreList";
-import H1 from "../../components/H1/index";
-import H3 from "../../components/H3/index";
-import Dialog from "../../components/Dialog/index";
+import Button from "components/Button";
+import H1 from "components/H1/index";
+import H3 from "components/H3/index";
+import Dialog from "components/Dialog/index";
 
 class SomeView extends React.Component {
 	constructor(props) {
@@ -53,7 +54,7 @@ class SomeView extends React.Component {
 		this.waitingExplosion = false;
 	}
 
-	async initView() {
+	initView = async () => {
 		const data = await getDataFirestore("scores", "score");
 		const players = await getDataFirestore("players");
 
@@ -62,7 +63,7 @@ class SomeView extends React.Component {
 			players,
 			isLoading: false
 		});
-	}
+	};
 
 	toggleScreen(type, newScreen) {
 		/* Expected format, example:
@@ -212,6 +213,34 @@ class SomeView extends React.Component {
 								</H3>
 							</div>
 							{this.state.data && <HighscoreList list={this.state.data} />}
+							{!this.state.data && (
+								<div style={"flex: 1"}>
+									<Button className="ReloadButton" onClick={this.initView}>
+										Couldn't load highscore. Try again?
+									</Button>
+								</div>
+							)}
+							<div style={"margin-top: 20px; padding: 0 10px;"}>
+								<span style={"margin-right: 10px; line-height: 1.6;"}>
+									Want to challenge you friends? Share. Or don't. Whatever.
+								</span>
+								<a
+									href="https://twitter.com/share?ref_src=twsrc%5Etfw"
+									className="twitter-share-button"
+									data-text="I just played a round of Pay to Win. Think you can beat my highscore?"
+									data-url="https://paytow.in"
+									data-hashtags="payToWin"
+									data-lang="en"
+									data-show-count="false"
+								>
+									Tweet
+								</a>
+								<script
+									async
+									src="https://platform.twitter.com/widgets.js"
+									charset="utf-8"
+								/>
+							</div>
 						</section>
 						<section className="Pay">
 							<StripeProvider apiKey="pk_live_YPUxTTVdovB0UNqjblSXENQy">

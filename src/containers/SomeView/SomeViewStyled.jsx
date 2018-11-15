@@ -31,6 +31,15 @@ const WrapperStyled = styled.div`
 			margin: 0 auto 20px;
 			max-width: 600px;
 		}
+
+		.ReloadButton {
+			width: 300px;
+			margin: 0 auto;
+			background-color: darkturquoise;
+			:hover {
+				background-color: #00dfe2;
+			}
+		}
 	}
 	.Pay {
 		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.8);
@@ -38,7 +47,7 @@ const WrapperStyled = styled.div`
 		padding: 20px 10px;
 		background-color: white;
 		border-radius: 10px;
-		margin: 10px auto;
+		margin: 0 auto 10px;
 		width: calc(100% - 20px);
 		max-width: 500px;
 		@media screen and (min-width: ${breakpoints.maxContainerWidth}) {
