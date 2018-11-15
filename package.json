@@ -144,7 +144,7 @@
 		"install:wget": "brew install wget --with-libressl",
 		"optimize:graphics": "svgo -f ./dist/assets/**/ --multipass --disable=removeViewBox --enable=removeDimensions",
 		"plop": "npx plop",
-		"postbuild": "yarn copy:meta && yarn test:size-limit && react-snap",
+		"postbuild": "yarn copy:meta && yarn test:size-limit",
 		"setup": "yarn && echo '✔' Used Yarn to install all dependencies && npx storybook init -f && yarn setup:welcome",
 		"setup:welcome": "echo '✔' Set up React Storybook && echo '🎉' New commands are available! '🎉' && echo '—' yarn dev: Start development server && echo '—' yarn build: Output a static build && echo '—' yarn plop function/class/model: Create function/class/model with test for function/class && echo '—' yarn plop component: Create React component, with Styled Components file and Storybook story && echo '—' yarn plop view: Create basic React view && echo '—' yarn plop componentclass: Create React classed component, with Styled Components file and Storybook story && echo '—' yarn storybook: Start React Storybook && echo '—' yarn build:storybook: Build React Storybook && echo '—' yarn commands: See a list of all available commands",
 		"start": "test && yarn run dev",
