@@ -4,20 +4,20 @@ import breakpoints from "helpers/breakpoints.mjs";
 
 const HighscoreListStyled = styled.div`
 	color: white;
-	margin: 0 auto;
-	width: 100%;
-	flex: 1;
-	height: 300px;
 	display: flex;
 	flex-direction: column;
+	flex: 1;
+	height: 300px;
+	margin: 0 auto;
+	width: 100%;
 
 	.ListHeaders {
-		display: flex;
 		align-items: center;
+		display: flex;
 		justify-content: space-between;
-		padding: 0 20px;
 		margin: 0 auto;
 		max-width: 600px;
+		padding: 0 20px;
 		width: 100%;
 		h3 {
 			margin-bottom: 5px;

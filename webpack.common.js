@@ -31,6 +31,7 @@ module.exports = {
 		extensions: [
 			".js",
 			".jsx",
+			".gif",
 			".html",
 			".jpg",
 			".jpeg",
@@ -51,13 +52,16 @@ module.exports = {
 				test: /\.(js|jsx)$/,
 				use: [
 					{
-						loader: "babel-loader"
+						loader: "babel-loader",
+						options: {
+							presets: ["@babel/preset-env"]
+						}
 					}
 				],
 				exclude: /node_modules/
 			},
 			{
-				test: /\.(jpg|jpeg|svg|png|woff2|woff)$/,
+				test: /\.(gif|jpg|jpeg|svg|png|woff2|woff)$/,
 				use: [
 					{
 						loader: "file-loader",
@@ -74,7 +78,7 @@ module.exports = {
 				test: /\.html$/,
 				use: [
 					{
-						loader: "raw-loader"
+						loader: "html-loader"
 					}
 				],
 				exclude: /node_modules/
@@ -92,7 +96,6 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			template: path.join(srcDir, "index.html"),
 			path: distDir,
-			filename: "index.html",
 			minify: {
 				collapseInlineTagWhitespace: true,
 				collapseWhitespace: true,
